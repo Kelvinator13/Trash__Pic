@@ -7,5 +7,9 @@ namespace TrashPic
 {
     public class Address
     {
+        [Key]
+        public int Id { get; set; }
+
+      
     }
 }

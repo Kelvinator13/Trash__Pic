@@ -8,10 +8,22 @@ namespace TrashPic.Models
     public class Customer
     {
         public int CustomerId { get; set; }
-        public string Name { get; set; }
+        [Display(Name ="FirstName")]
+        public string FirstName { get; set; }
+        Display[(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [ForeignKey("Address")]
+        public int AddressId { get; set; }
+        public Address Address { get; set; }
+        [ForeignKey("MaintenanceInfo")]
+        public int MaintenanceInfo { get; set; }
+        public MaintenanceInfo MaintenanceInfo { get; set; }
 
         [ForeignKey("IdentityUser")]
-        public string IdentityUserId { get; set; }
-        public IdentityUser IdentityUser { get; set; }
+        public string UserId { get; set; }
+
+        public string IdentityUser { get; set; }
+        public IdentityUser IdentityUsers { get; set; }
     }
 }
