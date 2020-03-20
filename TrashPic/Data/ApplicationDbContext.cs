@@ -12,5 +12,33 @@ namespace TrashPic.Data
             : base(options)
         {
         }
+
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Address> Addresses { get; set; }
+        public DbSet<MaintenanceInfo> MaintenanceInfos { get; set; }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.Entity<IdentityRole>()
+                .HasData(
+                new IdentityRole
+                {
+                    name = "Admin",
+                    NormalizedName = "ADMIN"
+                },
+                new IdentityRole
+                {
+                    Name = "Customer",
+                    NormalizedName = "CUSTOMER"
+                },
+                new IdentityRole
+                {
+                    name = "Employee",
+                    NormalizedName = "EMPLOYEE"
+                }
+                ),
+        }
     }
 }
