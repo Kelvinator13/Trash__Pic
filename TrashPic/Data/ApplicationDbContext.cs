@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using TrashPic.Models;
 
 namespace TrashPic.Data
 {
@@ -25,7 +27,7 @@ namespace TrashPic.Data
                 .HasData(
                 new IdentityRole
                 {
-                    name = "Admin",
+                    Name = "Admin",
                     NormalizedName = "ADMIN"
                 },
                 new IdentityRole
@@ -35,10 +37,10 @@ namespace TrashPic.Data
                 },
                 new IdentityRole
                 {
-                    name = "Employee",
+                    Name = "Employee",
                     NormalizedName = "EMPLOYEE"
                 }
-                ),
+                );
         }
     }
 }

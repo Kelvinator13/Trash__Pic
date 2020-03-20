@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TrashPic
+namespace TrashPic.Models
 {
     public class Address
     {
@@ -13,7 +14,7 @@ namespace TrashPic
         public string Street { get; set; }
         public string City { get; set; }
         public string State { get; set; }
-        public string Zip { get; set; }
+        public string Zipcode { get; set; }
 
 
     }
