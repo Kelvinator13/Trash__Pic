@@ -162,5 +162,16 @@ namespace TrashPic.Controllers
         {
             return _context.Employees.Any(e => e.Id == id);
         }
+        public IActionResult Confirm(int? id)
+        {
+            var customer = _context.Customers.FirstOrDefault(c => c.Id == id);
+            var service = _context.MaintenanceInfos.FirstOrDefault(s => s.Id == customer.MaintenanceInfoId);
+            service.Balance += 25;
+            service.IsPickedUp = true;
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Employees");
+        }
     }
+
 }
+

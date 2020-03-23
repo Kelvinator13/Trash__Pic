@@ -10,6 +10,9 @@ namespace TrashPic.Models
 {
     public class Customer
     {
+        internal int? Id;
+        internal int MaintenanceInfoId;
+
         [Key]
         public int CustomerId { get; set; }
         [Display(Name ="FirstName")]
