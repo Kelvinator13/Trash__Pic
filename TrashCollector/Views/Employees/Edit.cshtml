@@ -1,0 +1,152 @@
+﻿@model TrashCollector.Models.EmployeeViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
+}
+    <center>
+
+        <h1>Welcome @Model.Employee.FirstName!</h1>
+
+
+        <hr />
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <table style="width:50%" class="table table-dark table-sm">
+
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Employee.FirstName)
+                            </th>
+                            <td>
+                                @Html.DisplayFor(model => model.Employee.FirstName)
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Employee.LastName)
+                            </th>
+                            <td>
+                                @Html.DisplayFor(model => model.Employee.LastName)
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Employee.ZipCode)
+                            </th>
+                            <td>
+                                @Html.DisplayFor(model => model.Employee.ZipCode)
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+        <form asp-action="FilterByDay">
+            <div class="form-group">
+                <input type="hidden" asp-for="Employee.UserId" />
+
+            </div>
+            @Html.HiddenFor(model => model.Customers)
+            @Html.HiddenFor(model => model.Employee)
+            <div class="form-group">
+
+                <label asp-for="SelectedDay" class="control-label"></label>
+                <select asp-for="SelectedDay" class="form-control">
+                    <option value="">Select Day</option>
+
+                    <option value="1">Monday</option>
+                    <option value="2">Tuesday</option>
+                    <option value="3">Wednesday</option>
+                    <option value="4">Thursday</option>
+                    <option value="5">Friday</option>
+
+                </select>
+                <span asp-validation-for="SelectedDay" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Filter" class="btn btn-primary" />
+            </div>
+        </form>
+        <script>
+            ChangeAddress(address)
+            {
+                console.log("Hey");
+                console.log(address);
+                $("#address").val(address);
+                $("#buttonAddress").click();
+            }
+        </script>
+        <table class="table table-hover">
+            <thead>
+                <tr class="table-active">
+                    <th>
+                        First Name
+                    </th>
+                    <th>
+                        Last Name
+                    </th>
+                    <th>
+                        Address
+                    </th>
+                    <th>
+                        Last Picked Up
+                    </th>
+                    <th>Confirm Pick Up</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Customers != null)
+                {
+                    @foreach (var item in Model.Customers)
+                    {
+                        <tr class="@(item.LastPickedUp.Date == DateTime.Today? "table-success": "table-danger" )" onclick="ChangeAddress('@item.Address.StreetName')">
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FirstName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LastName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Address.StreetName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LastPickedUp)
+                            </td>
+                            <td>
+                                @if (item.PickUpDay == DateTime.Today.DayOfWeek && item.IsSuspended == false && item.LastPickedUp < DateTime.Today)
+                                {
+                                    <a class="btn btn-success" asp-action="ConfirmPickup" asp-route-id="@item.Id">
+                                        Confirm
+                                    </a>
+                                }
+                                else if (item.PickUpDay == DateTime.Today.DayOfWeek && item.IsSuspended == false && item.LastPickedUp >= DateTime.Today)
+                                {
+                                    <a class="btn btn-light">Picked Up Already</a>
+                                }
+                                else
+                                {
+                                    <a class="btn btn-info">Future Pickup</a>
+                                }
+                            </td>
+
+
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <text>No customers were found!</text>
+                }
+
+            </tbody>
+        </table>
+    </center>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
